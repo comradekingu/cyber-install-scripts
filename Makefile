@@ -35,7 +35,7 @@ check: all
 install: all
 	install -dm755 $(DESTDIR)$(PREFIX)/bin
 	install -m755 $(BINPROGS) $(DESTDIR)$(PREFIX)/bin
-	install -Dm644 completion/_archinstallscripts.zsh $(DESTDIR)$(PREFIX)/share/zsh/site-functions/_archinstallscripts
+	install -Dm644 completion/_cyberinstallscripts.zsh $(DESTDIR)$(PREFIX)/share/zsh/site-functions/_cyberinstallscripts
 	cd completion; for comp in *.bash; do \
 		install -Dm644 $$comp $(DESTDIR)$(PREFIX)/share/bash-completion/completions/$${comp%%.*}; \
 	done;
