@@ -15,6 +15,7 @@ m4_include(common)
 hostcache=0
 copykeyring=1
 copymirrorlist=1
+copyconfig=1
 pacmode=-Sy
 
 usage() {
@@ -25,14 +26,15 @@ usage: ${0##*/} [options] root [packages...]
     -C <config>    Use an alternate config file for pacman
     -c             Use the package cache on the host, rather than the target
     -G             Avoid copying the host's pacman keyring to the target
+    -p             Avoid copying the host's pacman config to the target
     -i             Prompt for package confirmation when needed (run interactively)
     -M             Avoid copying the host's mirrorlist to the target
     -U             Use pacman -U to install packages
 
     -h             Print this help message
 
-pacstrap installs packages to the specified new root directory. If no packages
-are given, pacstrap defaults to the "base" group.
+cyberstrap installs packages to the specified new root directory. If no packages
+are given, cyberstrap defaults to the "base" group.
 
 EOF
 }
@@ -54,6 +56,9 @@ while getopts ':C:cdGiMU' flag; do
       ;;
     c)
       hostcache=1
+      ;;
+    p)
+      copyconfig=0
       ;;
     i)
       interactive=1
@@ -101,9 +106,6 @@ mkdir -m 0755 -p "$newroot"/var/{cache/pacman/pkg,lib/pacman,log} "$newroot"/{de
 mkdir -m 1777 -p "$newroot"/tmp
 mkdir -m 0555 -p "$newroot"/{sys,proc}
 
-# mount API filesystems
-chroot_setup "$newroot" || die "failed to setup chroot %s" "$newroot"
-
 if (( copykeyring )); then
   # if there's a keyring on the host, copy it into the new root, unless it exists already
   if [[ -d /etc/pacman.d/gnupg && ! -d $newroot/etc/pacman.d/gnupg ]]; then
@@ -114,6 +116,11 @@ fi
 msg 'Installing packages to %s' "$newroot"
 if ! unshare --fork --pid pacman -r "$newroot" $pacmode "${pacman_args[@]}"; then
   die 'Failed to install packages to new root'
+fi
+
+if (( copyconfig )); then
+  # install the host's config onto the new root
+  cp -a /etc/pacman.conf "$newroot/etc/pacman.conf"
 fi
 
 if (( copymirrorlist )); then

@@ -3,14 +3,10 @@ VER=23
 PREFIX = /usr/local
 
 BINPROGS = \
-	arch-chroot \
-	genfstab \
-	pacstrap
+	cyberstrap
 
 MANS = \
-	doc/arch-chroot.8 \
-	doc/genfstab.8 \
-	doc/pacstrap.8
+	doc/cyberstrap.8
 
 BASH = bash
 

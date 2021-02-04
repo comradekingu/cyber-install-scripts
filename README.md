@@ -1,7 +1,7 @@
-# Arch Install Scripts
+# Cyber Install Scripts
 
-This is a small suite of scripts aimed at automating some menial
-tasks when installing [Arch Linux](https://www.archlinux.org).
+This contains CyberOS-specific installation scripts used by Calamares.
+Derived from [arch-install-scripts](https://git.archlinux.org/arch-install-scripts.git).
 
 ## Requirements
 

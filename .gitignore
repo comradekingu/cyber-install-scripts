@@ -1,6 +1,6 @@
 *~
 arch-chroot
 genfstab
-pacstrap
+cyberstrap
 doc/*.8
-arch-install-scripts-*.tar.gz*
+cyber-install-scripts-*.tar.gz*

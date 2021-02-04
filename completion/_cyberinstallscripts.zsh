@@ -1,10 +1,10 @@
-#compdef pacstrap genfstab arch-chroot
+#compdef cyberstrap genfstab arch-chroot
 
-_pacstrap_args=(
+_cyberstrap_args=(
     '-h[display help]'
 )
 
-_pacstrap_args_nonh=(
+_cyberstrap_args_nonh=(
     '(-h --help)-c[Use the package cache on the host, rather than the target]'
     '(--help -h)-i[Avoid auto-confirmation of package selections]'
 )
@@ -45,35 +45,24 @@ _pacman_completions_all_packages() {
 	fi
 }
 
-_pacstrap_none(){
+_cyberstrap_none(){
     _arguments -s : \
-        "$_pacstrap_args[@]" \
+        "$_cyberstrap_args[@]" \
         "$_longopts[@]" \
 }
 
-_genfstab_args=(
-    '-h[display help]'
-)
-_genfstab_args_nonh=(
-    '(--help -h)-p[Avoid printing pseudofs mounts]'
-    '(-U --help -h)-L[Use labels for source identifiers]'
-    '(-L --help -h)-U[Use UUIDs for source identifiers]'
-)
-
-_arch_chroot_args=( '-h[display help]' )
-
 _longopts=( '--help[display help]' )
 
-_pacstrap(){
+_cyberstrap(){
     if [[ -z ${(M)words:#--help} && -z ${(M)words:#-h} ]]; then
         case $words[CURRENT] in
             -c*|-d*|-i*)
-                _arguments -s "$_pacstrap_args_nonh[@]"
+                _arguments -s "$_cyberstrap_args_nonh[@]"
                 ;;
             -*)
                 _arguments -s : \
-                    "$_pacstrap_args[@]" \
-                    "$_pacstrap_args_nonh[@]" \
+                    "$_cyberstrap_args[@]" \
+                    "$_cyberstrap_args_nonh[@]" \
                     "$_longopts[@]"
                 ;;
             --*)
@@ -82,8 +71,8 @@ _pacstrap(){
                 ;;
             *)
                 _arguments -s : \
-                    "$_pacstrap_args[@]" \
-                    "$_pacstrap_args_nonh[@]" \
+                    "$_cyberstrap_args[@]" \
+                    "$_cyberstrap_args_nonh[@]" \
                     "$_longopts[@]" \
                     ":*:_path_files -/" \
                     ":*:_pacman_completions_all_packages"
@@ -94,67 +83,11 @@ _pacstrap(){
     fi
 }
 
-_genfstab(){
-    if [[ -z ${(M)words:#--help} && -z ${(M)words:#-*h} ]]; then
-        case $words[CURRENT] in
-            -p*|-L*|-U*)
-                _arguments -s : \
-                    "$_genfstab_args_nonh[@]"
-                ;;
-            -*)
-                _arguments -s : \
-                    "$_genfstab_args[@]" \
-                    "$_genfstab_args_nonh[@]" \
-                    "$_longopts[@]"
-                ;;
-            --*)
-                _arguments -s : \
-                    "$_longopts[@]"
-                ;;
-            *)
-                _arguments \
-                    "$_genfstab_args[@]" \
-                    "$_genfstab_args_nonh[@]" \
-                    "$_longopts[@]" \
-                    ":*:_path_files -/"
-                ;;
-        esac
-    else
-        return 1
-    fi
-}
-
-_arch_chroot(){
-    if [[ -z ${(M)words:#--help} && -z ${(M)words:#-*h} ]]; then
-        case $words[CURRENT] in
-            -*)
-                _arguments -s : \
-                    "$_arch_chroot_args[@]" \
-                    "$_longopts[@]" \
-                ;;
-            --*)
-                _arguments -s : \
-                    "$_longopts[@]"
-                ;;
-            *)
-                _arguments \
-                    ':*:_path_files -/'
-                ;;
-        esac
-    else
-        return 1
-    fi
-}
-
 _install_scripts(){
     case "$service" in
-        pacstrap)
-            _pacstrap "$@"
+        cyberstrap)
+            _cyberstrap "$@"
             ;;
-        genfstab)
-            _genfstab "$@";;
-        arch-chroot)
-            _arch_chroot "$@";;
         *)
             _message "Error";;
     esac

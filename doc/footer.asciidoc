@@ -1,9 +1,7 @@
 
 Bugs
 ----
-Bugs can be reported on the bug tracker 'https://bugs.archlinux.org' in the Arch
-Linux category and title prefixed with [arch-install-scripts] or via
-mailto:arch-projects@archlinux.org[].
+Bugs can be reported on the bug tracker 'https://github.com/cyberos/cyber-install-scripts/issues'.
 
 
 Authors
@@ -11,6 +9,7 @@ Authors
 
 Maintainers:
 
+* omame <me@omame.tech>
 * Dave Reisner <dreisner@archlinux.org>
 * Eli Schwartz <eschwartz@archlinux.org>
 
